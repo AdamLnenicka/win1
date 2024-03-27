@@ -1,105 +1,99 @@
-Active Directory — centrální správa uživatelů, počítačů a dalších zdrojů…
+Active Directory — centralized management of users, computers, and other resources...
+![alt text](image.png)
+Directory Service
 
-!https://cdn-images-1.medium.com/max/1600/1*NcC7atJw6FosA2j4pycVHw.png
+- Storage of information about users (login credentials, contact information such as emails, phone numbers, identification) as well as computers, or services that users can utilize.
+- The directory service accesses the so-called **directory**, which is a database where information about objects that are part of the computer network (users, computers, printers, network storage, etc.) is stored within a hierarchical structure.
+- Central authentication authority, enabling secure authentication (identity verification) of resources (users, services, computers).
+- LDAP (Lightweight Directory Access Protocol) — specifies what information and how it is sent.
 
-https://learn.microsoft.com/en-us/answers/questions/430532/active-directory-users-and-computers.html
+Active Directory Domain Services
 
-## Adresářová služba
+- Implementation of directory service from Microsoft.
+- The descriptive part contains **objects** such as users, groups, computers, accounts, and other resources. An object that can contain other objects is called a **container**, an often-used example of a container is an organizational unit (OU). An object that cannot contain other objects is called a **leaf**.
+- Each object has some properties, for example, a user has a name, surname, email, organizational affiliation, or group membership. These properties are called **attributes**.
 
-- uložení informací o uživatelích (přihlašovací údaje, kontaktní údaje jako například emaily, telefonní čísla, identifikace) i počítačích, resp. službách, které mohou uživatelé využívat.
-- Adresářová služba přistupuje k tzv. **adresáři**, což je databáze, ve které je v rámci hierarchické struktury uložena informace o objektech, které jsou součástí počítačové sítě (uživatelé, počítače, tiskárny, síťová úložistě apod.).
-- centrální autentizační autorita, která umožňuje bezpečnou autentizaci (ověření identity) zdrojů (uživatelů, služeb, počítačů).
-- LDAP (Lightweight Directory Access Protocol) — specifikuje, jaké informace a jakým způsobem se posílají.
+![alt text](image-1.png)
 
-## Active Directory Domain Services
+Hierarchy
 
-- Implementace adresářové služby od společnosti Microsoft.
-- Popisná část obsahuje **objekty**, jako jsou uživatelé, skupiny, počítače, účty a další prostředky. Objekt, který může obsahovat další objekty, se nazývá **kontejner**, příkladem často užívaného kontejneru je organizational unit (OU). Objekt, který nemůže obsahovat další objekty, se nazývá **list** (leaf).
-- Každý objekt má nějaké vlastnosti, například uživatel má jméno, příjmení, email, zařazení v rámci organizace nebo členství ve skupinách. Tyto vlastnosti se nazývají **atributy**.
+- It is used for geographical division (branch in Prague and in Pardubice) or organizational (IT department, accounting department, management, etc.).
+- Multiple objects form a **domain**.
+- Each domain has separate settings (e.g., security rules or permissions). If there are multiple domains in the hierarchy, this structure is called a **tree**. Multiple trees then form a **forest**.
+- The physical structure, connectivity, or topology of the organization is represented by so-called **sites**.
+- **Domain controller** contains a part of the database where information about the domain is stored. It serves as a link between client devices and AD. Multiple controllers can be created for one domain.
 
-!https://cdn-images-1.medium.com/max/1600/1*O0bCV-nm1HyuAPLL3ECJjw.gif
+Components and Key Concepts of AD
 
-### **Hierarchie**
+**Forest, OU, Domain**
 
-- je učena k dělení geolokačnímu (pobočka v Praze a v Pardubicích) nebo organizačnímu (oddělení IT, účetní oddělení, ředitelství atp.).
-- Více objektů tvoří **doménu** (domain).
-- Každá doména má samostatná nastavení (např. bezpečnostní pravidla nebo oprávnění). Pokud je v hierarchii více domén, nazývá se tato struktura **strom** (tree). Více stromů pak tvoří **les** (forest).
-- Fyzickou strukturu, zapojení nebo topologii organizace představují tzv. **lokality** (sites).
-- **Doménový řadič** (domain controller) obsahuje část databáze, ve které jsou uloženy informace o doméně. Slouží jako spojovací článek klientských zařízení s AD. Pro jednu doménu může být vytvořeno více řadičů.
+- A forest is the highest level of the AD logical structure. It represents a specific directory. It serves as a security barrier/boundary — administrators of one forest control the accesses stored within the domains of that forest.
+- Domain — represents finer division within the forest. It contains information about a portion of objects stored on a domain controller. Data relevant to the entire forest is replicated to all domain controllers in the forest.
+- Organizational Unit (OU) allows finer division of objects within one domain and easier management of individual domain objects through GPO — group policy objects.
 
-### **Komponenty a důležité pojmy AD**
+**Schema**
 
-**Les, OU, doména**
-
-- Les je nevyšší úroveň logické struktury AD. Les reprezentuje jeden konkrétní adresář. Představuje bezpečnostní bariéru/hranici — administrátoři jednoho lesa ovládají přístupy které jsou uloženy v rámci domén konkrétního lesa.
-- Doména — představuje jemnější členění v rámci lesa. Obsahuje informace o části objektů, jež jsou uloženy na doménovém řadiči. Data, která jsou relevantní pro celý les, jsou replikovány na všechny doménové řadiče v lese.
-- Organizační jednotka (Organizational Unit — OU) umožňuje jemnější členění objektů jedné domény a snadnější správu nad jednotlivými objekty domény prostřednictvím GPO — group policy objects (zásady skupiny).
-
-**Schéma**
-
-- V rámci AD je vše uloženo jako objekt. Schéma představuje popis objektů AD. Existují 2 typy schémat — classSchema a attributeSchema.
-- classSchema — definice třídy — třída představuje typ objektu v AD, např. uživatel, počítač, OU.
-- attributeSchema — definice konkrétních vlastností jednotlivých objektů (např. telefon, email, adresa atp.)
+- Everything in AD is stored as an object. Schema represents the description of AD objects. There are 2 types of schemas — classSchema and attributeSchema.
+- classSchema — class definition — class represents the type of object in AD, e.g., user, computer, OU.
+- attributeSchema — definition of specific properties of individual objects (e.g., telephone, email, address, etc.)
 
 **Distinguished Name**
 
-Každý objekt v AD má svůj jednoznačný název, tzv. **distinguished name** (DN). Tento název zároveň představuje pozici objektu v hierarchické struktuře. Existuje i relative distinguished name, který představuje poslední uzel v dané struktuře. Oba názvy jsou složeny z tzv. jmenných atributů, které určuje dvojice „typ_atributu=hodnota_atributu“. Typy atributů jsou:
+Every object in AD has its unique name, called **distinguished name** (DN). This name also represents the position of the object in the hierarchical structure. There is also a relative distinguished name, which represents the last node in the given structure. Both names consist of so-called naming attributes, specified by pairs of "attribute_type=attribute_value". Attribute types are:
 
 - CN (common name),
 - OU (organizational unit),
 - DC (domain component).
 
-```
-Ukažme si, jak by mohlo DN a RDN vypadat na konkrétním příkladu.
+Let's see how DN and RDN could look in a specific example.
 
-Mějme AD doménu, která se nazývá firma.cz. V rámci této domény existuje uživatelský účet pro uživatele Jana Nováka, který pracuje na oddělení účetnictví. DN daného uživatele by tedy mohlo vypadat např. takto:
+Let's have an AD domain called firma.cz. Within this domain, there is a user account for user Jan Novak, who works in the accounting department. The DN of the user could look like this:
 
 DN: CN=jnovak, OU=ucto, OU=Users, DC=firma, DC=cz
 RDN: CN=jnovak
-```
 
-**Doménový řadič**
+**Domain Controller**
 
-Každá doména musí obsahovat doménový řadič (DC — domain controller), kterým musí být počítač s OS Windows Server (ve verzi 2003–2016). Podle stáří OS se liší vlastnosti takto řízené domény. Každý DC obsahuje repliku příslušného adresáře, tedy danou (pod)strukturu AD. Pokud se jedná o strom, vždy existuje tzv. **globální katalog** (global catalog), který obsahuje adresář celého stromu. Kromě ukládání informací doménový řadič také řeší autentizaci a správu objektů prostřednictvím politik.
+Every domain must contain a domain controller (DC), which must be a computer with Windows Server OS (from version 2003 to 2016). Depending on the age of the OS, the properties of the domain managed in this way differ. Each DC contains a replica of the corresponding directory, that is, the given (sub)structure of AD. If it is a tree, there is always a so-called **global catalog** (GC) that contains the directory of the entire tree. In addition to storing information, the domain controller also handles authentication and object management through policies.
 
-**Síťová autentizace**
+**Network Authentication**
 
-Autentizace je potvrzení pravosti uživatele (tedy že se skutečně hlásí konkrétní uživatel). Velkou výhodou ADDS je to, že je možné uživatelské účty spravovat centrálně na jednom místě a umožnit uživatelům využívat různé síťové prostředky. Pro síťovou autentizace uživatelů v rámci ADDS se používá protokol **Kerberos.** Více informací o implementaci autentizačních mechanismů lze najít na https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/windows-authentication-overview
+Authentication is the confirmation of a user's authenticity (that the user is indeed claiming a specific identity). A great advantage of ADDS is that user accounts can be centrally managed in one place, allowing users to use various network resources. The Kerberos protocol is used for network authentication of users within ADDS. More information on authentication mechanisms can be found at [link](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/windows-authentication-overview).
 
-**Kerberos a KDC**
+**Kerberos and KDC**
 
-Aby počítače mohli využívat výhody ADDS, musí být **připojeny do domény (domain join).** Připojení do domény v podstatě znamená, že v AD je vytvořen účet pro daný počítač a tento stroj využívá Kerberos pro ověřování při komunikaci se síťovými službami. Autentizace prostřednictvím Kerberosu se tedy používá nejen pro uživatele, ale obecně pro ověření libovolných účtů. Funkčnost ověřování zajišťuje **Kerberos Key Distribution Center (KDC).** Princip ověřování je založen na tzv. ticketech, na základě kterých KDC uděluje přístup k požadovaným službám. Tickety mají omezenou platnost a je tady nutné je pravidelně obměňovat. KDC je skládá ze dvou částí:
+For computers to benefit from ADDS, they must be **joined to the domain (domain join).** Joining the domain essentially means that an account is created for the computer in AD, and this machine uses Kerberos for authentication when communicating with network services. Authentication via Kerberos is used not only for users but generally for verifying any accounts. The functionality of authentication is ensured by the **Kerberos Key Distribution Center (KDC).** The principle of authentication is based on so-called tickets, based on which the KDC grants access to the requested services. Tickets have limited validity, and it is necessary to renew them regularly. The KDC consists of two parts:
 
-- **Authentication Server** - tato část autentizuje uživatele a vydává tickety.
-- **Ticket Granting Server** - tato část na základě platných ticketů umožňuje přistupovat k síťovým službám.
+- **Authentication Server** - this part authenticates users and issues tickets.
+- **Ticket Granting Server** - this part, based on valid tickets, allows access to network services.
 
-Koncový objekt (např. počítač) a KDC sdílí tajný klíč, prostřednictvím kterého šifrují komunikaci. Bezpečnost služby významně závisí na tom, aby obě entity (KDC i cílový objekt) používali stejný čas. Více info o Kerberosu a jeho implementaci v ADDS: https://learn.microsoft.com/en-us/windows-server/security/kerberos/kerberos-authentication-overview
+The end object (e.g., computer) and the KDC share a secret key, through which they encrypt communication. The security of the service significantly depends on both entities (KDC and the target object) using the same time. More information about Kerberos and its implementation in ADDS can be found at [link](https://learn.microsoft.com/en-us/windows-server/security/kerberos/kerberos-authentication-overview).
 
-### Důležité koncepty ADDS
+**Key Concepts of ADDS**
 
-Širší popis konceptů AD se nachází v dokumentaci MS Docs:
+A broader description of AD concepts can be found in MS Docs documentation:
 
-https://docs.microsoft.com/en-us/windows-server/identity/ad-ds/get-started/virtual-dc/active-directory-domain-services-overview
+[link](https://docs.microsoft.com/en-us/windows-server/identity/ad-ds/get-started/virtual-dc/active-directory-domain-services-overview)
 
-Hlavními výhodami Active Directory je především:
+The main advantages of Active Directory are primarily:
 
-1. Centralizovaná správa zdrojů a zabezpečení — pokud jsou všechny objekty počítačové sítě v Active Directory, je možné je spravovat z jednoho místa.
-2. Snadné sdílení zdrojů — provázání objektů usnadňuje přístupy k prostředkům sítě (tiskárnám, síťovým diskům nebo jiným systémům a aplikacím).
-3. Jednotná autentizace — v rámci celé domény je možné pracovat jen s jednou identitou a využívat tak princip Single Sign On (SSO).
-4. Snadnější škálovatelnost — relativně snadné přidání dalšího objektu v rámci sítě s automatickou provázaností na další objekty.
+1. Centralized resource and security management — if all network objects are in Active Directory, they can be managed from one place.
+2. Easy resource sharing — linking objects facilitates access to network resources (printers, network drives, or other systems and applications).
+3. Unified authentication — within the entire domain, it is possible to work with only one identity, thus utilizing the Single Sign-On (SSO) principle.
+4. Easier scalability — relatively easy addition of another object within the network with automatic linkage to other objects.
 
-Na druhou stranu s sebou nese nasazení Active Directory v rámci organizace i jisté problémy:
+On the other hand, deploying Active Directory within an organization brings some challenges:
 
-1. Cena uvedeného řešení.
-2. Hlavní zaměření platformy na OS Windows (byť existuje omezená podpora i macOS i Linux).
-3. Při výpadku doménového řadiče (DC) bez zálohy může způsobit nefunkčnost celé organizace.
+1. Cost of the solution.
+2. Main focus of the platform on Windows OS (although there is limited support for macOS and Linux).
+3. In case of a domain controller (DC) failure without a backup, it can cause dysfunctionality of the entire organization.
 
-Určit, zda nasazovat Active Directory a v jakém rozsahu záleží na mnoha okolnostech. Velmi podstatnou roli hraje samozřejmě velikost podniku a tedy rozlehlost spravované sítě. Pro IT organizaci s 5 počítači, ve které si svůj počítač spravuje jeho uživatel, asi nemá smysl AD nasazovat. Na druhou stranu organizace s desítkami uživatelů, která je členěna na několik různých oddělení nebo organizačních úrovní může výhody AD využít (např. oddělení sdílených zdrojů pro jednotlivá oddělení). Roli hraje také způsob používání prostředků — např. pokud je v organizaci málo sdílených prostředků nebo vůbec žádné, opět nemá nasazení smysl. Pokud je však např. nezbytná migrace uživatelů mezi počítači (např. v počítačových učebnách ve škole), může být AD řešením. Důležitá mohou být i vnitropodniková pravidla (např. bezpečnostní omezení). Při velkém množství prostředků sítě pak může AD pomoci s jednodušší správou.
+Deciding whether to deploy Active Directory and to what extent depends on many circumstances. The size of the company and thus the extent of the managed network is of course crucial. It probably doesn't make sense to deploy AD for an IT organization with only 5 computers, where each user manages their own computer. On the other hand, an organization with dozens of users, which is divided into several different departments or organizational levels, can benefit from the advantages of AD (e.g., departmental shared resources). The way resources are used also plays a role — for example, if there are few shared resources in the organization or none at all, deployment again makes no sense. However, if, for example, user migration between computers is necessary (e.g., in computer labs at school), AD can be a solution. Internal corporate policies (e.g., security restrictions) can also be important. With a large number of network resources, AD can help with easier management.
 
-**Správa uživatelů**
-Nástroj Active Directory Users and Computers
+**User Management**
+Active Directory Users and Computers Tool
 
-**Zařazení počítače do domény**
+**Joining a Computer to the Domain**
 Settings->System->About->Related settings->Rename this PC (advanced)
 
 **Installation of Active Directory Domain Services (AD DS) Role on Windows Server 2019:**
