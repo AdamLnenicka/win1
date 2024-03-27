@@ -34,3 +34,4 @@
 
 8. **Logging in to the web server:**
    - Log in using the format DOMAIN(WEBINC)\Administrator(user), if required.
+![alt text](image.png)

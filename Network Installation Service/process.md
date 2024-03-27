@@ -41,3 +41,4 @@
 
 11. **Starting the Virtual Machine:**
     - Start the virtual machine.
+![alt text](image.png)
