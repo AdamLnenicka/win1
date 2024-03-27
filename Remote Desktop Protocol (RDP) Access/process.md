@@ -129,8 +129,7 @@ To complete activation, a **KMS host key** is required. This key is unique to ea
 Client side
 ```
 slmgr /skms server.ecbwin.local
-​```
-```
+
 slmgr /ato
 ```
 1. **Open Group Policy Management and navigate to the accounting department:**
